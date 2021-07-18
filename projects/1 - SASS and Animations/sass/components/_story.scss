@@ -1,0 +1,78 @@
+.story {
+    width: 75%;
+    padding: 6rem 6rem 6rem 9rem;
+    margin: 0 auto; //Block Element inside a Block Element
+    font-size: $default-font-size;
+    background-color: rgba( $color-white, .6 );
+    border-radius: 3px;
+    box-shadow: 0 3rem 6rem rgba($color-black, .1);
+    transform: skewX(-12deg);
+
+    @include respond(tab-port) {
+        width: 100%;
+        padding: 4rem 4rem 4rem 7rem;
+    }
+
+    //transform the container in a rectangle again
+    @include respond(phone) { transform: skewX(0deg); }
+
+    //This doen't work due CSS limitation, you can't put two transform declarations 
+    //on an element
+    /* 
+        & > * { //Select all the direct childern
+         transform: skewX(12deg); //To compensate the parents skew
+        }
+    */
+
+    &__shape {
+        width: 15rem;
+        height: 15rem;
+        float: left;
+        position: relative;
+        -webkit-shape-outside: circle( 50% at 50% 50% ); //Shapes the Outside of an Element
+        shape-outside: circle( 50% at 50% 50% );
+        -webkit-clip-path:circle( 50% at 50% 50% );
+        clip-path: circle( 50% at 50% 50% );
+        transform: translateX(-3rem) skewX(12deg); 
+        //The best way to moving floating elements is with transform
+        //To compensate the parents skew
+
+        //Skew the content back to 0
+        @include respond(phone) { transform: translateX(-3rem) skewX(0deg); }
+    }
+
+    &__img { 
+        height: 100%; //The image has the width bigger than the height, so the size needs to be based on the height        
+        transform: translateX(-4rem) scale(1.4);
+        transition: all .5s;
+    }
+
+    &__caption {
+        position: absolute;
+        top: 50%; left: 50%;   
+        transform: translate( -50%, 20% ); //Animation starts on the Bottom of the Image
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        text-align: center;
+        opacity: 0;
+        transition: all .5s;        
+    }
+
+    &__text {
+        transform: skewX(12deg); //To compensate the parents skew 
+
+        //Skew the content back to 0
+        @include respond(phone) { transform: skewX(0deg); }
+    }
+
+    &:hover &__caption {
+        transform: translate(-50%, -50%); //You need to set both direction otherwise X would be 0
+        opacity: 1;
+    }
+
+    &:hover &__img {
+        transform: translateX(-4rem) scale(1);
+        filter: blur(3px) brightness(80%);
+    }
+}

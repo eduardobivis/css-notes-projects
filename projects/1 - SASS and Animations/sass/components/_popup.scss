@@ -1,0 +1,120 @@
+.popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba($color-black, .8);
+    z-index: 2500;
+
+    //Initial State Hidden
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+
+    //when the PopUp become the anchor target
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:target &__content {
+        opacity: 1;
+        transform: translate( -50%, -50% ) scale(1);
+    }
+
+    &__close {
+
+        &:link, &:visited {
+            color: $color-grey-dark;
+            position: absolute;
+            top: 2.5rem; right: 2.5rem;
+            font-size: 3rem;
+            text-decoration: none;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        &:hover {
+            color: $color-primary;
+        }
+        
+        &:active {
+            color: red;
+        }
+
+        
+    }
+
+    &__content {
+        @include absCenter;
+
+        width: 75%;
+        background-color: white;
+        border-radius: 3px;
+        box-shadow: 0 2rem 4rem rgba( $color-black, .2 );
+        z-index: 3000;
+        overflow: hidden; //Image Overflows the Border Radius
+        display: table;
+
+        //Starts the Modal small and hidden
+        opacity: 0;
+        transition: all .5s .2s; //2s delay to show up after the dark background
+        transform: translate( -50%, -50% ) scale(0); 
+        /*
+            you need to repeat the absCenter transform cause you can't have 2 
+            transforms in the same element
+        */
+
+        @include respond(tab-port) {
+            display: inline-block; //Removes the Dispay Table
+            height: 70%; //Reduces the Height to fit on Small Devices
+            overflow: scroll; //Scrolls the content that overflows
+        }
+    }
+
+    &__left {
+        display: table-cell;
+
+        @include respond(tab-port) { display: none; } //Removes the Display Table Cell
+    }
+
+    &__right {
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3rem 5rem;
+
+        @include respond(tab-port) { display: inline-block; } //Removes the Display Table Cell
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+
+        @include respond(tab-port) {
+            display: inline; //Set both Images in the same line
+            width: 49.5%; //Reduce their widths to make them side by side
+        }
+    }
+
+    &__text {
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        column-count: 2;
+        column-gap: 4rem;
+        column-rule: 1px solid $color-grey-light-2; //Thin line separating the two columns
+
+        //Mozilla Properties
+        -moz-column-count: 2;
+        -moz-column-gap: 4rem;
+        -moz-columns-rule: 1px;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+
+        @include respond(tab-port) {
+            column-count: 1; -moz-column-count: 1;
+        }
+
+        hyphens: auto; //Allow hifens breaking the words, depends on the Document Language
+    }
+}

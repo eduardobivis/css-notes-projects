@@ -1,0 +1,27 @@
+.container {
+  width: 1200px;
+  height: 1200px;
+  margin: 0 auto;
+  display: grid;
+  padding: 50px 50px;
+  grid-template-rows: 1fr 2fr 4fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 50px; }
+  .container > * {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: red;
+    padding: 20px; }
+  .container .header {
+    grid-column: 1 / -1; }
+  .container .sidebar {
+    grid-row: 2 / 4;
+    grid-column: 4 / 5; }
+  .container .main-content {
+    grid-row: 3 / 4;
+    grid-column: 1 / 4; }
+  .container .footer {
+    grid-row: 4 / 5;
+    grid-column: 1 / -1; }
